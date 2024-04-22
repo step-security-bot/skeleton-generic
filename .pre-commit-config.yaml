@@ -29,30 +29,18 @@ repos:
       - id: requirements-txt-fixer
       - id: trailing-whitespace
 
-  # Text file hooks
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.39.0
+  # Ansible hooks
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v24.2.0
     hooks:
-      - id: markdownlint
-        args:
-          - --config=.mdl_config.yaml
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    # This is the last version of v3 available from the mirror. We should hold
-    # here until v4, which is currently in alpha, is more stable.
-    rev: v3.1.0
+      - id: ansible-lint
+      # files: molecule/default/playbook.yml
+
+  # Docker hooks
+  - repo: https://github.com/IamTheFij/docker-pre-commit
+    rev: v3.0.1
     hooks:
-      - id: prettier
-        # This is the latest version of v3 available from NPM. The pre-commit
-        # mirror does not pull tags for old major versions once a new major
-        # version tag is published.
-        additional_dependencies:
-          - prettier@3.2.5
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
-    hooks:
-      - id: yamllint
-        args:
-          - --strict
+      - id: docker-compose-check
 
   # GitHub Actions hooks
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -60,12 +48,6 @@ repos:
     hooks:
       - id: check-github-actions
       - id: check-github-workflows
-
-  # pre-commit hooks
-  - repo: https://github.com/pre-commit/pre-commit
-    rev: v3.6.2
-    hooks:
-      - id: validate_manifest
 
   # Go hooks
   - repo: https://github.com/TekWizely/pre-commit-golang
@@ -90,35 +72,25 @@ repos:
       - id: go-test-repo-mod
       # Go Vet
       - id: go-vet-repo-mod
+
   # Nix hooks
   - repo: https://github.com/nix-community/nixpkgs-fmt
     rev: v1.3.0
     hooks:
       - id: nixpkgs-fmt
 
-  # Shell script hooks
-  - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.6
+  # Packer hooks
+  - repo: https://github.com/cisagov/pre-commit-packer
+    rev: v0.0.2
     hooks:
-      - id: shellcheck
-  - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.7.0-4
+      - id: packer_fmt
+      - id: packer_validate
+
+  # pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit
+    rev: v3.6.2
     hooks:
-      - id: shfmt
-        args:
-          # List files that will be formatted
-          - --list
-          # Write result to file instead of stdout
-          - --write
-          # Indent by two spaces
-          - --indent
-          - "2"
-          # Binary operators may start a line
-          - --binary-next-line
-          # Switch cases are indented
-          - --case-indent
-          # Redirect operators are followed by a space
-          - --space-redirects
+      - id: validate_manifest
 
   # Python hooks
   - repo: https://github.com/PyCQA/bandit
@@ -150,12 +122,29 @@ repos:
     hooks:
       - id: pyupgrade
 
-  # Ansible hooks
-  - repo: https://github.com/ansible/ansible-lint
-    rev: v24.2.0
+  # Shell script hooks
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
     hooks:
-      - id: ansible-lint
-      # files: molecule/default/playbook.yml
+      - id: shellcheck
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.7.0-4
+    hooks:
+      - id: shfmt
+        args:
+          # List files that will be formatted
+          - --list
+          # Write result to file instead of stdout
+          - --write
+          # Indent by two spaces
+          - --indent
+          - "2"
+          # Binary operators may start a line
+          - --binary-next-line
+          # Switch cases are indented
+          - --case-indent
+          # Redirect operators are followed by a space
+          - --space-redirects
 
   # Terraform hooks
   - repo: https://github.com/antonbabenko/pre-commit-terraform
@@ -164,15 +153,27 @@ repos:
       - id: terraform_fmt
       - id: terraform_validate
 
-  # Docker hooks
-  - repo: https://github.com/IamTheFij/docker-pre-commit
-    rev: v3.0.1
+  # Text file hooks
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.39.0
     hooks:
-      - id: docker-compose-check
-
-  # Packer hooks
-  - repo: https://github.com/cisagov/pre-commit-packer
-    rev: v0.0.2
+      - id: markdownlint
+        args:
+          - --config=.mdl_config.yaml
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    # This is the last version of v3 available from the mirror. We should hold
+    # here until v4, which is currently in alpha, is more stable.
+    rev: v3.1.0
     hooks:
-      - id: packer_fmt
-      - id: packer_validate
+      - id: prettier
+        # This is the latest version of v3 available from NPM. The pre-commit
+        # mirror does not pull tags for old major versions once a new major
+        # version tag is published.
+        additional_dependencies:
+          - prettier@3.2.5
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args:
+          - --strict
