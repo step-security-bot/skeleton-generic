@@ -196,6 +196,10 @@ repos:
     rev: v3.0.1
     hooks:
       - id: docker-compose-check
+  - repo: https://github.com/AleksaC/hadolint-py
+    rev: v2.12.1b3
+    hooks:
+      - id: hadolint
 
   # Packer hooks
   - repo: https://github.com/cisagov/pre-commit-packer
