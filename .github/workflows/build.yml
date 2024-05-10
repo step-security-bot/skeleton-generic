@@ -75,7 +75,7 @@ jobs:
       - id: go-cache
         name: Lookup Go cache directory
         run: |
-          echo "dir=$(go env GOCACHE)" >> $GITHUB_OUTPUT
+          echo "dir=$(go env GOCACHE)" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v3
         env:
           BASE_CACHE_KEY: "${{ github.job }}-${{ runner.os }}-\
@@ -123,22 +123,22 @@ jobs:
         env:
           PACKAGE_URL: github.com/go-critic/go-critic/cmd/gocritic
           PACKAGE_VERSION: ${{ steps.setup-env.outputs.go-critic-version }}
-        run: go install ${PACKAGE_URL}@${PACKAGE_VERSION}
+        run: go install "${PACKAGE_URL}@${PACKAGE_VERSION}"
       - name: Install goimports
         env:
           PACKAGE_URL: golang.org/x/tools/cmd/goimports
           PACKAGE_VERSION: ${{ steps.setup-env.outputs.goimports-version }}
-        run: go install ${PACKAGE_URL}@${PACKAGE_VERSION}
+        run: go install "${PACKAGE_URL}@${PACKAGE_VERSION}"
       - name: Install gosec
         env:
           PACKAGE_URL: github.com/securego/gosec/v2/cmd/gosec
           PACKAGE_VERSION: ${{ steps.setup-env.outputs.gosec-version }}
-        run: go install ${PACKAGE_URL}@${PACKAGE_VERSION}
+        run: go install "${PACKAGE_URL}@${PACKAGE_VERSION}"
       - name: Install staticcheck
         env:
           PACKAGE_URL: honnef.co/go/tools/cmd/staticcheck
           PACKAGE_VERSION: ${{ steps.setup-env.outputs.staticcheck-version }}
-        run: go install ${PACKAGE_URL}@${PACKAGE_VERSION}
+        run: go install "${PACKAGE_URL}@${PACKAGE_VERSION}"
       # TODO: https://github.com/cisagov/skeleton-generic/issues/165
       # We are temporarily using @mcdonnnj's forked branch of terraform-docs
       # until his PR: https://github.com/terraform-docs/terraform-docs/pull/745
@@ -147,15 +147,15 @@ jobs:
       - name: Clone ATX headers branch from terraform-docs fork
         run: |
           git clone \
-           --branch $TERRAFORM_DOCS_REPO_BRANCH_NAME \
-           --depth $TERRAFORM_DOCS_REPO_DEPTH \
+           --branch "$TERRAFORM_DOCS_REPO_BRANCH_NAME" \
+           --depth "$TERRAFORM_DOCS_REPO_DEPTH" \
            --single-branch \
-           $TERRAFORM_DOCS_REPO_URL /tmp/terraform-docs
+           "$TERRAFORM_DOCS_REPO_URL" /tmp/terraform-docs
       - name: Build and install terraform-docs binary
         run: |
           go build \
           -C /tmp/terraform-docs \
-          -o $(go env GOPATH)/bin/terraform-docs
+          -o "$(go env GOPATH)"/bin/terraform-docs
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
