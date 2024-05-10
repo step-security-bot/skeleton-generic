@@ -60,6 +60,17 @@ repos:
     hooks:
       - id: check-github-actions
       - id: check-github-workflows
+  - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
+    rev: v1.6.27.13
+    hooks:
+      - id: actionlint
+        additional_dependencies:
+          # Support linting `run` steps using the `python` shell
+          - pyflakes==3.2.0
+          # Support linting `run` steps using shellscript
+          # Note:
+          # This pin must be manually kept in sync with the hook version used.
+          - shellcheck-py==0.10.0.1
 
   # pre-commit hooks
   - repo: https://github.com/pre-commit/pre-commit
@@ -116,6 +127,9 @@ repos:
           # Redirect operators are followed by a space
           - --space-redirects
   - repo: https://github.com/shellcheck-py/shellcheck-py
+    # Note:
+    # When bumping versions we must also bump the version used as an
+    # additional dependency in the actionlint hook.
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
